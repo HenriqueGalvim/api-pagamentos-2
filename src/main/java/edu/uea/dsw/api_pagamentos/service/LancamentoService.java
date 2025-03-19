@@ -3,6 +3,7 @@ package edu.uea.dsw.api_pagamentos.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import edu.uea.dsw.api_pagamentos.dto.LancamentoDTO;
@@ -112,15 +113,14 @@ public class LancamentoService {
         return toDTO(LancamentoAtualizado);
     }
 
-    @Transactional
-    public void deletarLancamento(Long codigo) {
-        if (!lancamentoRepository.existsById(codigo)) {
-            throw new RecursoNaoEncontradoException("Lançamento não encontrado");
-        }
-        try {
-            lancamentoRepository.deleteById(codigo);
-        } catch (Exception e) {
-            throw new RecursoEmUsoException("Lançamento em uso e não pode ser removido");
-        }
+public void deletarLancamento(Long codigo) {
+    if (!lancamentoRepository.existsById(codigo)) {
+        throw new RecursoNaoEncontradoException("Lançamento não encontrado");
     }
+    try {
+        lancamentoRepository.deleteById(codigo);
+    } catch (DataIntegrityViolationException ex) {
+        throw new RecursoEmUsoException("Lançamento em uso e não pode ser removido");
+    }
+}
 }
