@@ -7,5 +7,5 @@ import edu.uea.dsw.api_pagamentos.model.Lancamento;
 
 @Repository
 public interface LancamentoRepository extends JpaRepository<Lancamento, Long> {
-
+ //Teste
 }
