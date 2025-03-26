@@ -37,7 +37,7 @@ public class LancamentoController {
         Page<LancamentoDTO> lancamentos = lancamentoService.pesquisar(lancamentoFilter, pageable);
         return ResponseEntity.ok(lancamentos);
     }
-
+ 
     // GET /lancamentos/resumo
     @GetMapping("/resumo")
     public ResponseEntity<Page<ResumoLancamentoDTO>> resumir(LancamentoFilterDTO lancamentoFilter, Pageable pageable) {

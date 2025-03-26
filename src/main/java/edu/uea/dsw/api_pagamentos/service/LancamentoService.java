@@ -70,7 +70,8 @@ public class LancamentoService {
     }
 
     @Transactional
-    public LancamentoDTO criarLancamento(LancamentoDTO lancamentoDTO) {
+    public LancamentoDTO criarLancamento(LancamentoDTO lancamentoDTO) { 
+
         Lancamento lancamento = toEntity(lancamentoDTO);
         Lancamento savedLancamento = lancamentoRepository.save(lancamento);
         return toDTO(savedLancamento);
