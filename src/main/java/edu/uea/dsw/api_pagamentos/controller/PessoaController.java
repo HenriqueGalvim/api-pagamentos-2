@@ -1,13 +1,15 @@
 package edu.uea.dsw.api_pagamentos.controller;
 
-
+import java.net.URI;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import edu.uea.dsw.api_pagamentos.dto.PessoaDTO;
 import edu.uea.dsw.api_pagamentos.service.PessoaService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/pessoas")
@@ -31,17 +33,20 @@ public class PessoaController {
         return pessoaService.buscarPessoaPorCodigo(codigo);
     }
 
-    // POST /pessoas
-    @PostMapping
-    public ResponseEntity<PessoaDTO> criarPessoa(@RequestBody PessoaDTO pessoaDTO) {
-        PessoaDTO pessoaCriada = pessoaService.criarPessoa(pessoaDTO);
-        return new ResponseEntity<>(pessoaCriada, HttpStatus.CREATED);
+    @PutMapping("/{codigo}")
+    public ResponseEntity<PessoaDTO> atualizarPessoa(@Valid @PathVariable Long codigo, @RequestBody PessoaDTO pessoa) {
+        PessoaDTO atualizada = pessoaService.atualizarPessoa(codigo, pessoa);
+        return ResponseEntity.ok(atualizada);
     }
 
-    // PUT /pessoas/{codigo}
-    @PutMapping("/{codigo}")
-    public PessoaDTO atualizarPessoa(@PathVariable Long codigo, @RequestBody PessoaDTO pessoaDTO) {
-        return pessoaService.atualizarPessoa(codigo, pessoaDTO);
+    @PostMapping
+    public ResponseEntity<PessoaDTO> criarPessoa(@Valid @RequestBody PessoaDTO pessoa) {
+        PessoaDTO criada = pessoaService.criarPessoa(pessoa);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{codigo}")
+                .buildAndExpand(criada.getCodigo())
+                .toUri();
+        return ResponseEntity.created(uri).body(criada);
     }
 
     // DELETE /pessoas/{codigo}

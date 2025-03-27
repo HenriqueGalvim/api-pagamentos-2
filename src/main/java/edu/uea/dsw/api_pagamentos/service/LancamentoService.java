@@ -29,7 +29,7 @@ public class LancamentoService {
         this.lancamentoRepository = lancamentoRepository;
     }
 
-    // Método para converter Lancamento em LancamentoDTO
+    // Converte Lancamento para LancamentoDTO
     private LancamentoDTO toDTO(Lancamento lancamento) {
         LancamentoDTO dto = new LancamentoDTO();
         dto.setCodigo(lancamento.getCodigo());
@@ -40,16 +40,11 @@ public class LancamentoService {
         dto.setObservacao(lancamento.getObservacao());
         dto.setTipo(lancamento.getTipo());
         dto.setCategoria(lancamento.getCategoria());
-        if (lancamento.getPessoa() != null) {
-            PessoaDTO pessoaDTO = new PessoaDTO();
-            pessoaDTO.setCodigo(lancamento.getPessoa().getCodigo());
-            pessoaDTO.setNome(lancamento.getPessoa().getNome());
-            dto.setPessoa(pessoaDTO);
-        }
+        dto.setPessoa(lancamento.getPessoa());
         return dto;
     }
 
-    // Método para converter LancamentoDTO em Lancamento
+    // Converte LancamentoDTO para Lancamento
     private Lancamento toEntity(LancamentoDTO dto) {
         Lancamento lancamento = new Lancamento();
         lancamento.setCodigo(dto.getCodigo());
@@ -60,17 +55,12 @@ public class LancamentoService {
         lancamento.setObservacao(dto.getObservacao());
         lancamento.setTipo(dto.getTipo());
         lancamento.setCategoria(dto.getCategoria());
-        if (dto.getPessoa() != null) {
-            Pessoa pessoa = new Pessoa();
-            pessoa.setCodigo(dto.getPessoa().getCodigo());
-            pessoa.setNome(dto.getPessoa().getNome());
-            lancamento.setPessoa(pessoa);
-        }
+        lancamento.setPessoa(dto.getPessoa());
         return lancamento;
     }
 
     @Transactional
-    public LancamentoDTO criarLancamento(LancamentoDTO lancamentoDTO) { 
+    public LancamentoDTO criarLancamento(LancamentoDTO lancamentoDTO) {
 
         Lancamento lancamento = toEntity(lancamentoDTO);
         Lancamento savedLancamento = lancamentoRepository.save(lancamento);

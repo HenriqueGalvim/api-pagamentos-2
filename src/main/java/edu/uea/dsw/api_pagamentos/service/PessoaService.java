@@ -4,7 +4,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.uea.dsw.api_pagamentos.dto.EnderecoDTO;
 import edu.uea.dsw.api_pagamentos.dto.PessoaDTO;
 import edu.uea.dsw.api_pagamentos.model.Endereco;
 import edu.uea.dsw.api_pagamentos.model.Pessoa;
@@ -31,12 +30,16 @@ public class PessoaService {
         dto.setNome(pessoa.getNome());
         dto.setAtivo(pessoa.getAtivo());
         if (pessoa.getEndereco() != null) {
-            EnderecoDTO enderecoDTO = new EnderecoDTO();
-            enderecoDTO.setLogradouro(pessoa.getEndereco().getLogradouro());
-            enderecoDTO.setCidade(pessoa.getEndereco().getCidade());
-            enderecoDTO.setEstado(pessoa.getEndereco().getEstado());
-            enderecoDTO.setCep(pessoa.getEndereco().getCep());
-            dto.setEndereco(enderecoDTO);
+            Endereco endereco = new Endereco();
+            endereco.setLogradouro(pessoa.getEndereco().getLogradouro());
+            endereco.setCidade(pessoa.getEndereco().getCidade());
+            endereco.setEstado(pessoa.getEndereco().getEstado());
+            endereco.setCep(pessoa.getEndereco().getCep());
+            endereco.setNumero(pessoa.getEndereco().getNumero());
+            endereco.setBairro(pessoa.getEndereco().getBairro());
+            endereco.setComplemento(pessoa.getEndereco().getComplemento());
+
+            dto.setEndereco(endereco);
         }
         return dto;
     }
@@ -53,6 +56,9 @@ public class PessoaService {
             endereco.setCidade(dto.getEndereco().getCidade());
             endereco.setEstado(dto.getEndereco().getEstado());
             endereco.setCep(dto.getEndereco().getCep());
+            endereco.setNumero(pessoa.getEndereco().getNumero());
+            endereco.setBairro(pessoa.getEndereco().getBairro());
+            endereco.setComplemento(pessoa.getEndereco().getComplemento());
             pessoa.setEndereco(endereco);
         }
         return pessoa;

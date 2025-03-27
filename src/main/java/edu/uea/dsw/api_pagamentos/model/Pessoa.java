@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -19,17 +20,19 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "pessoa")
 public class Pessoa {
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long codigo;
-   
-   @NotNull
-   @Size(min = 3, max = 50)
-   private String nome;
-   
-   @NotNull
-   private Boolean ativo;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long codigo;
+    
+    @NotNull
+    @Size(min = 3, max = 50)
+    private String nome;
+    
+    @NotNull
+    private Boolean ativo;
 
-   @Embedded
-   private Endereco endereco;
+    @NotNull(message = "O endereço é obrigatório")
+    @Valid
+    @Embedded
+    private Endereco endereco;
 }

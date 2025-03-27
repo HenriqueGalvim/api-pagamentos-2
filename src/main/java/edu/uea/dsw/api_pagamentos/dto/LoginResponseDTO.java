@@ -5,11 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class EnderecoDTO {
-    private String logradouro;
-    private String cidade;
-    private String estado;
-    private String cep;
+@NoArgsConstructor
+public class LoginResponseDTO {
+    private String token;
+    private long expiresIn;
 }
