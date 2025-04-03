@@ -3,11 +3,13 @@ package edu.uea.dsw.api_pagamentos.service;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import edu.uea.dsw.api_pagamentos.dto.LoginRequestDTO;
 import edu.uea.dsw.api_pagamentos.model.Usuario;
 import edu.uea.dsw.api_pagamentos.repository.UsuarioRepository;
 
+@Service
 public class AuthenticationService {
 
     private final UsuarioRepository userRepository;
